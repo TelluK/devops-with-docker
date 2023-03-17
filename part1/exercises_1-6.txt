@@ -1,0 +1,100 @@
+EXERCISE 1.1: GETTING STARTED
+Submit the output for docker ps -a which shows 2 stopped containers and one running.
+
+$ docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED              STATUS                      PORTS     NAMES
+26e162554cf3   nginx     "/docker-entrypoint.…"   About a minute ago   Up About a minute           80/tcp    elastic_lovelace
+153b5444d832   nginx     "/docker-entrypoint.…"   About a minute ago   Exited (0) 25 seconds ago             optimistic_ramanujan
+c4229b59224b   nginx     "/docker-entrypoint.…"   3 minutes ago        Exited (0) 4 seconds ago              determined_lehmann
+
+
+EXERCISE 1.2: CLEANUP
+Submit the output for docker ps -a and docker images
+
+$ docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+$ docker images
+REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
+
+
+EXERCISE 1.3: SECRET MESSAGE
+Submit the secret message and command(s) given as your answer.
+
+$ docker container run -d -it --name apple devopsdockeruh/simple-web-service:ubuntu
+$ docker exec -it apple bash
+root@3bb843dd483b:/usr/src/app# ls
+server  text.log
+root@3bb843dd483b:/usr/src/app# cat text.log
+
+Secret message is: 'You can find the source code here: https://github.com/docker-hy'
+
+
+EXERCISE 1.4: MISSING DEPENDENCIES
+Return the command you used to start process and the command(s) you used to fix the ensuing problems.
+
+$ docker run -d -it --name web6 ubuntu sh -c 'apt-get update && apt-get install -y curl; while true; do echo "Input website:"; read website; echo "Searching.."; sleep 1; curl http://$website; done'
+
+OR
+
+$ docker run -d -it --name web7 ubuntu sh -c 'while true; do echo "Input website:"; read website; echo "Searching.."; sleep 1; curl http://$website; done'
+
+$ docker exec -it web7 bash
+/# apt-get update
+/# apt-get -y install curl
+/# exit
+
+$ docker attach web7
+helsinki.fi
+Searching..
+<html>
+<head><title>301 Moved Permanently</title></head>
+<body>
+<center><h1>301 Moved Permanently</h1></center>
+<hr><center>nginx/1.20.1</center>
+</body>
+</html>
+Input website:
+^C
+
+
+EXERCISE 1.5: SIZES OF IMAGES
+Pull both images and compare the image sizes. 
+Go inside the alpine container and make sure the secret message functionality is the same. 
+Alpine version doesn't have bash but it has sh.
+
+$ docker pull devopsdockeruh/simple-web-service:ubuntu
+
+$ docker pull devopsdockeruh/simple-web-service:alpine
+
+$ docker images
+REPOSITORY                          TAG       IMAGE ID       CREATED       SIZE
+devopsdockeruh/simple-web-service   ubuntu    4e3362e907d5   2 years ago   83MB
+devopsdockeruh/simple-web-service   alpine    fd312adc88e0   2 years ago   15.7MB
+
+$ docker run -d -it --name alps devopsdockeruh/simple-web-service:alpine
+
+$ docker ps
+CONTAINER ID   IMAGE                                      COMMAND                 CREATED          STATUS          PORTS     NAMES
+0a21dba6ae59   devopsdockeruh/simple-web-service:alpine   "/usr/src/app/server"   13 seconds ago   Up 12 seconds             alps
+
+// start shell in running container
+$ docker exec -it alps /bin/sh
+/usr/src/app # ls
+server    text.log
+/usr/src/app # cat text.log
+2023-03-17 13:27:29 +0000 UTC
+2023-03-17 13:27:31 +0000 UTC
+2023-03-17 13:27:33 +0000 UTC
+2023-03-17 13:27:35 +0000 UTC
+2023-03-17 13:27:37 +0000 UTC
+Secret message is: 'You can find the source code here: https://github.com/docker-hy'
+
+
+EXERCISE 1.6: HELLO DOCKER HUB
+Submit the secret message and command(s) given to get it as your answer.
+
+$ docker run -it devopsdockeruh/pull_exercise
+Give me the password: basics
+You found the correct password. Secret message is:
+"This is the secret message"

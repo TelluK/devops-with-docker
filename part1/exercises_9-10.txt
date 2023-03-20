@@ -1,0 +1,14 @@
+EXERCISE 1.9: VOLUMES
+Submit the command you used to complete the exercise.
+
+// use bind mount to mount our file into the container 
+$ docker run -v "$(pwd)/text.log:/usr/src/app/text.log" devopsdockeruh/simple-web-service
+
+
+EXERCISE 1.10: PORTS OPEN
+Submit your used commands for this exercise.
+
+// uses image web-server created in exercise 1.8
+// Use -p flag to access the contents
+// 127.0.0.1:3030:8080 allows request from host machine through port 3030 to container port 8080
+$ docker run -p 127.0.0.1:3030:8080 web-server

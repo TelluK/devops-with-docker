@@ -1,3 +1,5 @@
+# Dockerfile for starting the example-frontend
+
 # Install Node version 16
 FROM node:16
 
@@ -16,7 +18,10 @@ RUN npm install -g serve
 # Copy all source code
 COPY . . 
 
-# Build the static files
+# add environment variables
+ENV REACT_APP_BACKEND_URL="http://localhost:8080"
+
+# build the static files
 RUN npm run build
 
 # Use npm package called serve to serve the project in port 5000

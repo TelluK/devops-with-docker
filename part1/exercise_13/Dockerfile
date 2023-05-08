@@ -1,3 +1,5 @@
+# Dockerfile for starting the example-backend
+
 # Install Golang version 1.16 
 FROM golang:1.16
 
@@ -13,6 +15,7 @@ COPY . .
 RUN go build
 
 # add environment variables
-ENV REQUEST_ORIGIN="http://localhost:8080"
+# ENV REQUEST_ORIGIN="http://localhost:8080"
+ENV REQUEST_ORIGIN="http://localhost:3000"
 
 CMD ["./server"]
